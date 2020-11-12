@@ -10,4 +10,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".AllFragment"
-    tools:listitem="@layout/fragment_all" />
+    tools:listitem="@layout/recycler_item" />

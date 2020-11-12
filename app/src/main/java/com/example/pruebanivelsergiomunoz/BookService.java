@@ -14,4 +14,8 @@ public interface BookService {
     String API_FILTERED_ROUTE = "/getMessages?";
     @GET(API_FILTERED_ROUTE)
     Call<List<Book>> getFilteredBooks(@Query("genre") String genre);
+
+    String API_BOOK_ROUTE = "/getMessage?";
+    @GET(API_BOOK_ROUTE)
+    Call<List<Book>> getBook(@Query("messageId") int bookID);
 }

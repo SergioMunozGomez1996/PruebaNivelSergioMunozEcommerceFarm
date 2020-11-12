@@ -19,5 +19,5 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".FilterFragment"
-        tools:listitem="@layout/fragment_filter" />
+        tools:listitem="@layout/recycler_item" />
 </LinearLayout>

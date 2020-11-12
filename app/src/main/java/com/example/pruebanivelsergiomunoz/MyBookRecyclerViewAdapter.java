@@ -7,17 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.pruebanivelsergiomunoz.dummy.DummyContent.DummyItem;
-
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecyclerViewAdapter.ViewHolder> {
+public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecyclerViewAdapter.ViewHolder> implements View.OnClickListener {
 
     private final List<Book> mValues;
+    private View.OnClickListener onClickListener;
 
     public MyBookRecyclerViewAdapter(List<Book> items) {
         mValues = items;
@@ -26,7 +21,8 @@ public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecycl
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_all, parent, false);
+                .inflate(R.layout.recycler_item, parent, false);
+        view.setOnClickListener(this);
         return new ViewHolder(view);
     }
 
@@ -40,6 +36,16 @@ public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecycl
     @Override
     public int getItemCount() {
         return mValues.size();
+    }
+
+    public void setOnClickListener(View.OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(onClickListener!=null)
+            onClickListener.onClick(v);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

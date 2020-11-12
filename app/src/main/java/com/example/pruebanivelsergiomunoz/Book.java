@@ -30,13 +30,13 @@ public class Book {
     public String getDescription() {
         return description;
     }
-    public void setDescription(String body) {
-        this.description = body;
+    public void setDescription(String description) {
+        this.description = description;
     }
     public String getGenre() {
         return genre;
     }
-    public void setGenre(String body) {
-        this.genre = body;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

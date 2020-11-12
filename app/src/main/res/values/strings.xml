@@ -2,4 +2,7 @@
     <string name="app_name">PruebaNivelSergioMunoz</string>
     <string name="tab_general">Todas los libros</string>
     <string name="tab_filter">Filtro por género</string>
+    <string name="BOOK_ID">bookID</string>
+    <string name="NO_DATA">Sin datos</string>
+    <string name="UNKNOWN">Sin especificar</string>
 </resources>

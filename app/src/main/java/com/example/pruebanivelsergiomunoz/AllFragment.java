@@ -1,6 +1,7 @@
 package com.example.pruebanivelsergiomunoz;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,13 +9,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.renderscript.Sampler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
-
-import com.example.pruebanivelsergiomunoz.dummy.DummyContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +77,15 @@ public class AllFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             MyBookRecyclerViewAdapter myBookRecyclerViewAdapter = new MyBookRecyclerViewAdapter(books);
+            myBookRecyclerViewAdapter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int bookID = books.get(recyclerView.getChildAdapterPosition(v)).getId();
+                    Intent intent = new Intent(getActivity(), BookDetails.class);
+                    intent.putExtra(getString(R.string.BOOK_ID), bookID);
+                    startActivity(intent);
+                }
+            });
             recyclerView.setAdapter(myBookRecyclerViewAdapter);
             getPosts(myBookRecyclerViewAdapter);
         }
@@ -94,15 +102,13 @@ public class AllFragment extends Fragment {
         call.enqueue(new Callback<List<Book>>() {
             @Override
             public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
-                for(Book book : response.body()) {
-                    books.add(book);
-                }
+                books.addAll(response.body());
                 myBookRecyclerViewAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Call<List<Book>> call, Throwable t) {
-                Toast.makeText(getContext(),"Sin datos",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),String.valueOf(R.string.NO_DATA),Toast.LENGTH_SHORT).show();
             }
         });
     }
