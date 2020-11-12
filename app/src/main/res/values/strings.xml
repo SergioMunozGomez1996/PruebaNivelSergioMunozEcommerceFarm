@@ -2,5 +2,4 @@
     <string name="app_name">PruebaNivelSergioMunoz</string>
     <string name="tab_general">Todas los libros</string>
     <string name="tab_filter">Filtro por género</string>
-    <string name="data_base_uri">https://us-central1-pruebas-nivel.cloudfunctions.net</string>
 </resources>

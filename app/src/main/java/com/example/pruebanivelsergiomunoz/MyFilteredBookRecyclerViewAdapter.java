@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class MyFilteredBookRecyclerViewAdapter extends RecyclerView.Adapter<MyFilteredBookRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Book> mValues;
 
-    public MyFilteredBookRecyclerViewAdapter(List<DummyItem> items) {
+    public MyFilteredBookRecyclerViewAdapter(List<Book> items) {
         mValues = items;
     }
 
@@ -33,8 +33,8 @@ public class MyFilteredBookRecyclerViewAdapter extends RecyclerView.Adapter<MyFi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(String.valueOf(mValues.get(position).getId()));
+        holder.mContentView.setText(String.valueOf(mValues.get(position).getTitle()));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MyFilteredBookRecyclerViewAdapter extends RecyclerView.Adapter<MyFi
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Book mItem;
 
         public ViewHolder(View view) {
             super(view);
