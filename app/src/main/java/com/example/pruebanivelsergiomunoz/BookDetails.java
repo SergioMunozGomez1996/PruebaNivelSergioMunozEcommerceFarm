@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,29 +17,32 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+//Clase encargada de gestionar el comportamiento del activity que muestra los detalles del libro seleccionado
 public class BookDetails extends AppCompatActivity {
 
-    TextView id, title, isbn, genre, description;
+    private TextView id, title, isbn, genre, description, idTitle, titleTitle, isbnTitle, genreTitle, descriptionTitle;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
-
-        String bookID;
-
         this.id = findViewById(R.id.id);
         this.title = findViewById(R.id.title);
         this.isbn = findViewById(R.id.isbn);
         this.genre = findViewById(R.id.genre);
         this.description = findViewById(R.id.description);
+        this.idTitle = findViewById(R.id.id_title);
+        this.titleTitle = findViewById(R.id.title_title);
+        this.isbnTitle = findViewById(R.id.isbn_title);
+        this.genreTitle = findViewById(R.id.genre_title);
+        this.descriptionTitle = findViewById(R.id.description_title);
+        this.progressBar = findViewById(R.id.progressBar);
 
         Intent intent = getIntent();
         getBook(intent.getIntExtra("bookID", 0));
-
-
     }
-
+    //Peticion http para obtener y mostrar la información del libro seleccionado
     private void getBook(int bookID) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://us-central1-pruebas-nivel.cloudfunctions.net")
@@ -49,6 +54,7 @@ public class BookDetails extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
                 for(Book book : response.body()) {
+                    progressBar.setVisibility(View.GONE);
                     id.setText(String.valueOf(book.getId()));
                     title.setText(book.getTitle());
                     isbn.setText(String.valueOf(book.getISBN()));
@@ -58,6 +64,12 @@ public class BookDetails extends AppCompatActivity {
                         genre.setText(R.string.UNKNOWN);
 
                     description.setText(book.getDescription());
+
+                    idTitle.setVisibility(View.VISIBLE);
+                    titleTitle.setVisibility(View.VISIBLE);
+                    isbnTitle.setVisibility(View.VISIBLE);
+                    genreTitle.setVisibility(View.VISIBLE);
+                    descriptionTitle.setVisibility(View.VISIBLE);
                 }
             }
 

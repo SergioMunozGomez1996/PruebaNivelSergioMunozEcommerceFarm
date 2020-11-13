@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
-
+//Clase que permite tener un adapter personalizado para las litas de libros
 public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecyclerViewAdapter.ViewHolder> implements View.OnClickListener {
 
     private final List<Book> mValues;

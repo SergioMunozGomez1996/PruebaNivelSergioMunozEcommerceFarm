@@ -16,6 +16,7 @@ import com.example.pruebanivelsergiomunoz.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
+//Clase que controla la paginación en tabs de los fragments
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes

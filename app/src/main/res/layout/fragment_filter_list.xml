@@ -8,8 +8,13 @@
     <Spinner
         android:id="@+id/genre_spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:entries="@array/genreFilter"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/filter_list"
         android:name="com.example.pruebanivelsergiomunoz.FilterFragment"

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * A fragment representing a list of Items.
  */
+//Clase encargada de gestionar el comportamiento del fragment que muestra la lista de todos los libros disponibles
 public class AllFragment extends Fragment {
 
     // TODO: Customize parameter argument names
@@ -34,7 +36,8 @@ public class AllFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
 
-    List<Book> books = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
+    private ProgressBar progressBar;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,31 +70,25 @@ public class AllFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_list, container, false);
 
+        progressBar = view.findViewById(R.id.progressBar);
+        //Iniciamos el recyclerview (la lista) y le damos un adaptador. Además le indicamos que abra el activiy de detalles del libro pasandole el id del libro tocado
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            MyBookRecyclerViewAdapter myBookRecyclerViewAdapter = new MyBookRecyclerViewAdapter(books);
-            myBookRecyclerViewAdapter.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int bookID = books.get(recyclerView.getChildAdapterPosition(v)).getId();
-                    Intent intent = new Intent(getActivity(), BookDetails.class);
-                    intent.putExtra(getString(R.string.BOOK_ID), bookID);
-                    startActivity(intent);
-                }
-            });
-            recyclerView.setAdapter(myBookRecyclerViewAdapter);
-            getPosts(myBookRecyclerViewAdapter);
-        }
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        Context context = view.getContext();
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        MyBookRecyclerViewAdapter myBookRecyclerViewAdapter = new MyBookRecyclerViewAdapter(books);
+        myBookRecyclerViewAdapter.setOnClickListener(v -> {
+            int bookID = books.get(recyclerView.getChildAdapterPosition(v)).getId();
+            Intent intent = new Intent(getActivity(), BookDetails.class);
+            intent.putExtra(getString(R.string.BOOK_ID), bookID);
+            startActivity(intent);
+        });
+        recyclerView.setAdapter(myBookRecyclerViewAdapter);
+        getPosts(myBookRecyclerViewAdapter);
         return view;
     }
 
+    //Peticion http para obtener la coleccion de todos los libros disponibles
     private void getPosts(MyBookRecyclerViewAdapter myBookRecyclerViewAdapter) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://us-central1-pruebas-nivel.cloudfunctions.net")
@@ -102,6 +99,7 @@ public class AllFragment extends Fragment {
         call.enqueue(new Callback<List<Book>>() {
             @Override
             public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                progressBar.setVisibility(View.GONE);
                 books.addAll(response.body());
                 myBookRecyclerViewAdapter.notifyDataSetChanged();
             }
