@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 String value = String.valueOf(dataSnapshot.getValue());
-                if(value.equals("17")){
+                if(value.equals("1")){
                     Intent intent = new Intent(getApplicationContext(), MaintenanceActivity.class);
                     //Estos flags nos permiten eliminar las activity en la pila
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
